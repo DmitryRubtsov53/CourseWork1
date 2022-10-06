@@ -22,22 +22,23 @@ public class Main {
 
         System.out.println("Базовая сложность **********************************************" + "\n");
 
-        printlistFull (employee);        System.out.println();   //8.1
-        sumSalary (employee);            System.out.println();   //8.2
-        employeeMaxSalary (employee);    System.out.println();   //8.3
-        employeeMinSalary (employee);    System.out.println();   //8.4
-        averageSalary (employee);        System.out.println();   //8.5
-        printFullNames (employee);       System.out.println();   //8.6
+        printlistFull (employee);          System.out.println();   //8.1
+        double ssf = sumSalary (employee); System.out.println();   //8.2
+        employeeMaxSalary (employee);      System.out.println();   //8.3
+        employeeMinSalary (employee);      System.out.println();   //8.4
+        averageSalary (employee, ssf);     System.out.println();   //8.5
+        printFullNames (employee);         System.out.println();   //8.6
 
         System.out.println("Повышенная сложность **********************************************" + "\n");
 
         indexSalary (employee);        System.out.println();  // Индексация        //1
-        int depatment = 1;                                    // Номер отдела.     //2
+        int depatment = 1;                                    // Номер отдела      //2
+        double ssd;         //вспомогательная переменная - средняя з/п отдела
 
-        employeeMaxSalaryDep (employee, depatment);    System.out.println();          //2.1
-        employeeMinSalaryDep (employee, depatment);    System.out.println();          //2.2
-        sumSalaryDep (employee, depatment);            System.out.println();          //2.3
-        averageSalaryDep (employee, depatment);        System.out.println();          //2.4
+        employeeMaxSalaryDep (employee, depatment);    System.out.println();       //2.1
+        employeeMinSalaryDep (employee, depatment);    System.out.println();       //2.2
+        ssd = sumSalaryDep (employee, depatment);      System.out.println();       //2.3
+        averageSalaryDep (employee, depatment, ssd);   System.out.println();       //2.4
 
         double indexDep = 1.05; // коэффициент индексации зарплат отдела на 5%
         indexSalaryDep (employee, depatment, indexDep);                             //2.5
@@ -52,10 +53,10 @@ public class Main {
     //  методы Повышенной сложности *******************************************************************
     public static Employee[] indexSalary (Employee[] empl) {   // индексируем зарплату всех сотрудников
         System.out.println("1. Табель сотрудников фирмы после индексации зарплаты:" + "\n" +
-                                                         "--------------------------------------------");
+                                       "-------------------------------------------------------------------");
         double index = 1.10;  // индекс повышения зарплаты всех сотрудников фирмы на 10%
         for (int i = 0; i < empl.length; i++) {
-            empl[i].setSalary(empl[i].getSalary() * index);
+            empl[i].setSalary(Math.ceil(empl[i].getSalary() * index));
             System.out.println(empl[i]);
             }
         return empl;
@@ -69,7 +70,7 @@ public class Main {
         }
         for (int i = 0; i < empl.length; i++) {
             if (maxEl == empl[i].getSalary())
-                System.out.println("          " + empl[i].getFio() + "\t" + "( " + maxEl + " рублей. )");
+                System.out.println("          " + empl[i].getFio() + "\t" + "( " + Math.ceil(maxEl) + " рублей. )");
         }
     }
     public static void employeeMinSalaryDep (Employee[] empl, int dep) {
@@ -80,29 +81,30 @@ public class Main {
                 minEl = empl[j].getSalary();
         }
         for (int i = 0; i < empl.length; i++) {
-            if (minEl == empl[i].getSalary())
+            if (minEl == empl[i].getSalary() && empl[i].getDepartment() == dep)
                 System.out.println("          " + empl[i].getFio() + "\t" + "( " + minEl + " рублей. )");
         }
     }
-    public static void sumSalaryDep (Employee[] empl, int dep) {
+    public static double sumSalaryDep (Employee[] empl, int dep) {
         double sum = 0;
         for (int i = 0; i < empl.length; i++) {
             if (empl[i].getDepartment() == dep)
                 sum += empl[i].getSalary();
         }
         System.out.println("2.3. Сумма зарплат сотрудников отдела " + dep + " за месяц: " + sum + " руб.");
+        return sum;
     }
-    public static void averageSalaryDep (Employee[] empl, int dep) {
-        double sum = 0;
+    public static void averageSalaryDep (Employee[] empl, int dep, double ssd) {
+        //double sum = ssd;
         int memberDep = 0;
         for (int i = 0; i < empl.length; i++) {
             if (empl[i].getDepartment() == dep) {
-                sum += empl[i].getSalary();
+                //sum += empl[i].getSalary();
                 memberDep++;
             }
         }
             System.out.println("2.4. Средняя зарплата сотрудников отдела " + dep + " в месяц: "
-                                                                 + (double) sum / memberDep + " руб.");
+                                                                 +  Math.ceil(ssd / memberDep) + " руб.");
     }
     public static Employee[] indexSalaryDep (Employee[] empl, int dep, double index) { // индексируем зарплату сотрудников отдела
         for (int i = 0; i < empl.length; i++) {
@@ -112,12 +114,12 @@ public class Main {
         }
         return empl;
     }
-    public static void printlistDep (Employee[] employee, int dep) {
-        System.out.println("2.6. Табель сотрудников отдела " + dep + ":" + "\n" +
-                "----------------------------------------------------------------------------------");
-        for (Employee el : employee) {
+    public static void printlistDep (Employee[] empl, int dep) {
+        System.out.println("2.6. Табель сотрудников отдела " + dep + " после индексации зарплат отдела:" + "\n" +
+                "--------------------------------------------------------------------");
+        for (Employee el : empl) {
             if (el.getDepartment() == dep) {
-                System.out.println("id: " + el.getId() + "\t" + el.getFio() + "\t" + el.getSalary() + " руб.");
+                System.out.println("id: " + el.getId() + "\t" + el.getFio() + "\t" + Math.ceil(el.getSalary()) + " руб.");
             }
         }
     }
@@ -126,7 +128,7 @@ public class Main {
         for (Employee el : empl) {
             if (el.getSalary() >= namber ) {
                 System.out.println("id: " + el.getId() + "\t" + el.getFio() + "\t" + "отдел: "
-                        + el.getDepartment() + "\t" + "зарплата: " + el.getSalary() + " руб.");
+                        + el.getDepartment() + "\t" + "зарплата: " + Math.ceil(el.getSalary()) + " руб.");
             }
         }
     }
@@ -135,13 +137,28 @@ public class Main {
         for (Employee el : empl) {
             if (el.getSalary() < namber ) {
                 System.out.println("id: " + el.getId() + "\t" + el.getFio() + "\t" + "отдел: "
-                        + el.getDepartment() + "\t" + "зарплата: " + el.getSalary() + " руб.");
+                        + el.getDepartment() + "\t" + "зарплата: " + Math.ceil(el.getSalary()) + " руб.");
             }
         }
     }
     //  методы Базовой сложности ***********************************************************************
+    public static void printlistFull (Employee[] empl) {
+        System.out.println("8.1. Табель сотрудников фирмы:" + "\n" +
+                "-----------------------------------------------------------------");
+        for (Employee el : empl) {
+            System.out.println(el);
+        }
+    }
+    public static double sumSalary (Employee[] empl) {
+        double sum = 0;
+        for (int i = 0; i < empl.length; i++) {
+            sum += empl[i].getSalary();
+        }
+        System.out.println("8.2. Сумма зарплат сотрудников фирмы за месяц: " + sum + " руб.");
+        return sum;
+    }
     public static void employeeMaxSalary (Employee[] empl) {
-        System.out.println("3. MAX зарплату в фирме получают: ");
+        System.out.println("8.3. MAX зарплату в фирме получают: ");
         double maxEl = MIN_VALUE;
         for (int j = 0; j < empl.length; j++) {
             if (empl[j].getSalary() > maxEl) maxEl = empl[j].getSalary();
@@ -152,7 +169,7 @@ public class Main {
             }
     }
     public static void employeeMinSalary (Employee[] empl) {
-        System.out.println("4. MIN зарплату в фирме получают: ");
+        System.out.println("8.4. MIN зарплату в фирме получают: ");
         double minEl = MAX_VALUE;
         for (int j = 0; j < empl.length; j++) {
             if (empl[j].getSalary() < minEl) minEl = empl[j].getSalary();
@@ -162,31 +179,13 @@ public class Main {
                 System.out.println("          " + empl[i].getFio() + "\t" + "( " + minEl + " рублей. )");
             }
     }
-    public static void printlistFull (Employee[] employee) {
-            System.out.println("1. Табель сотрудников фирмы:" + "\n" +
-                    "-----------------------------------------------------------------");
-            for (Employee el : employee) {
-                System.out.println(el);
-            }
-    }
-    public static void sumSalary (Employee[] empl) {
-            double sum = 0;
-            for (int i = 0; i < empl.length; i++) {
-                 sum += empl[i].getSalary();
-            }
-            System.out.println("2. Сумма зарплат сотрудников фирмы за месяц: " + sum + " руб.");
-    }
-    public static void averageSalary (Employee[] empl) {
-            double sum = 0;
-            for (int i = 0; i < empl.length; i++) {
-                sum = sum + empl[i].getSalary();
-            }
-            System.out.println("5. Средняя зарплата сотрудников фирмы в месяц: "
-                                                          + (double) sum / empl.length + " руб.");
+    public static void averageSalary (Employee[] empl, double ssf) {
+            System.out.println("8.5. Средняя зарплата сотрудников фирмы в месяц: "
+                                                          + Math.ceil(ssf / empl.length) + " руб.");
     }
     public static void printFullNames (Employee[] emp) {
-        System.out.println("6. ФИО всех сотрудников фирмы:" + "\n" +
-                                           "-----------------------------------------------------------");
+        System.out.println("8.6. ФИО всех сотрудников фирмы:" + "\n" +
+                           "--------------------------------------------------------------------");
         for (int i = 0; i < emp.length; i++) {
             System.out.println("                         " + emp[i].getFio());
         }
