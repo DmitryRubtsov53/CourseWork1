@@ -3,11 +3,11 @@ public class Employee {
     private final String fio;
     private int department;
     private double salary;
-    private final static int counter = 0;
+    private static int counter = 1;
     private final int id ;
 
     // Class constructor ***********************************************************************************************
-    public Employee(String fio, int department, double salary, int counter) {
+    public Employee(String fio, int department, double salary) {
         this.id = counter;
         counter++;
         this.fio = fio;

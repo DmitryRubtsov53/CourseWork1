@@ -9,16 +9,16 @@ public class Main {
 
         Employee[] employee = new Employee[10];
 
-        employee[0] = new Employee ("Махно Нестр Иванович", 1, 35000,1);
-        employee[1] = new Employee ("Савинов Иван Силович", 1, 28000, 2);
-        employee[2] = new Employee ("Лялина Ольга Ивановна", 2, 35000, 3);
-        employee[3] = new Employee ("Смирнов Пётр Нилович", 2, 37000, 4);
-        employee[4] = new Employee ("Волозин Вяча Кайнович", 1, 15000, 5);
-        employee[5] = new Employee ("Гирина Яна Фёдоровна", 3, 52000, 6);
-        employee[6] = new Employee ("Явин Максим Петрович", 1, 45000, 7);
-        employee[7] = new Employee ("Иванов Пётр Иванович", 3, 35000, 8);
-        employee[8] = new Employee ("Сурков Ефрем Олегович", 1, 41000, 9);
-        employee[9] = new Employee ("Тупин Владим Иудович", 2, 15000, 10);
+        employee[0] = new Employee ("Махно Нестр Иванович", 1, 35000);
+        employee[1] = new Employee ("Савинов Иван Силович", 1, 28000);
+        employee[2] = new Employee ("Лялина Ольга Ивановна", 2, 35000);
+        employee[3] = new Employee ("Смирнов Пётр Нилович", 2, 37000);
+        employee[4] = new Employee ("Волозин Вяча Кайнович", 1, 15000);
+        employee[5] = new Employee ("Гирина Яна Фёдоровна", 3, 52000);
+        employee[6] = new Employee ("Явин Максим Петрович", 1, 45000);
+        employee[7] = new Employee ("Иванов Пётр Иванович", 3, 35000);
+        employee[8] = new Employee ("Сурков Ефрем Олегович", 1, 41000);
+        employee[9] = new Employee ("Тупин Владим Иудович", 2, 15000);
 
         System.out.println("Базовая сложность **********************************************" + "\n");
 
