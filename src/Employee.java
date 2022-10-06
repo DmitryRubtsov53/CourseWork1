@@ -1,21 +1,20 @@
 public class Employee {
 
-    private String fio;
+    private final String fio;
     private int department;
     private double salary;
-    private static int counter = 1;
-    private static int id;
+    private final static int counter = 0;
+    private final int id ;
 
     // Class constructor ***********************************************************************************************
     public Employee(String fio, int department, double salary, int counter) {
-        this.id = counter++;
+        this.id = counter;
+        counter++;
         this.fio = fio;
         this.department = department;
         this.salary = salary;
     }
-
     // Getters *********************************************************************************************************
-
     public String getFio() {
         return fio;
     }
@@ -26,9 +25,9 @@ public class Employee {
 
     public double getSalary() { return salary;  }
 
-    public static int getCounter() { return counter;  }
+    public int getCounter() { return counter;  }
 
-    public static int getId() { return id;  }
+    public int getId() { return id ;  }
 
     // Setters *********************************************************************************************************
     public void setDepartment(int department) {
@@ -38,11 +37,10 @@ public class Employee {
         this.salary = salary;
     }
 
-
-
+    //******************************************************************************************************************
     @Override
     public String toString() {
-        return "id: " + (this.id = counter++) + '\t' + this.fio + '\t' + "отдел: " + this.department +
+        return "id: " + this.id + '\t' + this.fio + '\t' + "отдел: " + this.department +
                 '\t' + "зарплата: " + this.salary + " руб." ;
-    }  // "id: " + this.id + '\t' +
+    }
 }
